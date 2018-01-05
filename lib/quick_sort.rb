@@ -12,15 +12,17 @@ class QuickSort
 
 
   def self.sort2!(array, start = 0, length = array.length, &prc)
-    # subarr = array[start...length]
-    if length<=1 
-      return
+    subarr = array[start...length]
+    if length<2 
+      return array
     end 
     prc ||= Proc.new{|x,y| x<=>y}
     pivot_idx = partition(array, start, length, &prc)
-    
     sort2!(array, start, array[start...pivot_idx].length, &prc)
-    sort2!(array, pivot_idx+1, array[pivot_idx+1..-1].length, &prc)
+    if (pivot_idx+1 < start+length)
+      sort2!(array, pivot_idx+1, array[pivot_idx+1...(pivot_idx+length)].length, &prc)
+    end 
+    
     array
   end
 
@@ -30,9 +32,14 @@ class QuickSort
   #then iterate barrier by 1
   #After completing this, swap the pivot with the last element left of the barrier
   def self.partition(array, start, length, &prc)
+    
     subarr = array[start...start+length]
+    # p array
+    # p subarr
+    # p start
     prc ||= Proc.new{|x,y| x<=>y}
     pivot_el = array[start]
+
     barr = start 
     idx = start+1
     while idx<length+start

@@ -1,5 +1,5 @@
 require "quick_sort"
-
+require 'byebug'
 describe QuickSort do
   describe "partition" do
     it "partitions the whole array properly" do
@@ -34,7 +34,10 @@ describe QuickSort do
       arr = [4, 2, 1, 3, 6, 5, 7]
 
       num_comparisons = 0
+      # byebug
       QuickSort.sort2!(arr) do |el1, el2|
+        # p "#{el1}, #{el2}"
+        # p '----'
         num_comparisons += 1
         el1 <=> el2
       end
